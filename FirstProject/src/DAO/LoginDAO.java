@@ -25,7 +25,7 @@ public class LoginDAO {
 	JdbcUtil jdbc = JdbcUtil.getInstance();
 	// id와 pw까지 검사하는 메서드
 	public Map<String, Object> login(String id, String pass) {
-		String sql = "SELECT * FROM MANAGER WHERE P_ID = ?";
+		String sql = "SELECT * FROM MANAGER WHERE P_LOGINID = ?";
 		sql = sql + " AND P_PW = ? ";
 
 		List<Object> param = new ArrayList<Object>();
@@ -38,7 +38,7 @@ public class LoginDAO {
 	
 	// id만 가지고 검사를 하는 메서드
 	public Map<String, Object> select(String id) {
-		String sql = "SELECT * FROM TBL_MEMBER WHERE MEM_ID = ? ";
+		String sql = "SELECT * FROM MANAGER WHERE P_ID = ? ";
 		List<Object> param = new ArrayList<Object>();
 		param.add(id);
 		// jdbc의 selectone을 사용하려고 위에있는 모든것을 만든것임.

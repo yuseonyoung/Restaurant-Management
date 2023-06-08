@@ -1,6 +1,6 @@
 package DTO;
 
-public class OderDTO {
+public class OrderDTO {
 	private String i_id;
 	private String i_name; 
 	private String i_origin;
@@ -11,9 +11,9 @@ public class OderDTO {
 	private String i_allergy;
 	private String v_id;
 	
-	OderDTO(){}
+	public OrderDTO(){}
 	
-	public OderDTO(String i_id, String i_name, String i_origin, String i_classification, String i_expirationdate,
+	public OrderDTO(String i_id, String i_name, String i_origin, String i_classification, String i_expirationdate,
 		int i_inventory, String i_storage, String i_allergy, String v_id) {
 		
 		this.i_id = i_id;

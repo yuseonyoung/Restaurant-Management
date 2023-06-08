@@ -1,26 +1,27 @@
 package Controller;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Service.LoginService;
-import Service.OderService;
+import Service.OrderService;
 
 public class MainController {
 	static Scanner sc = new Scanner(System.in);
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
 			new MainController().init();
 			new MainController().managerSelect();
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
 	}
+
 	public void init() {
-		 int num = 0;
-		 while(true) {
+		int num = 0;
+		while (true) {
 			System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
 			System.out.println("¦¢                                            ¦¢");
 			System.out.println("¦¢                                            ¦¢");
@@ -34,66 +35,67 @@ public class MainController {
 			System.out.println("¦¢                                            ¦¢");
 			System.out.println("¦¢                                            ¦¢");
 			System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
-			
+
 			try {
-			    num = Integer.valueOf(sc.nextLine());
-			    break;
+				num = Integer.valueOf(sc.nextLine());
+				break;
 			} catch (NumberFormatException e) {
-			    System.out.println("Àß¸øµÈ °ªÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.");
-			    continue;
+				System.out.println("Àß¸øµÈ °ªÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.");
+				continue;
 			}
 
-		 }
-				switch(num){
-					case 1:
-						System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¢       °ü¸®ÀÚÀÇ ¾ÆÀÌµð¿Í ÆÐ½º¿öµå¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä        	     ¦¢");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¢       ID :                         	     ¦¢");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¢       PW :                                 ¦¢");
-						System.out.println("¦¢    	                                     ¦¢");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¢                                            ¦¢");
-						System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
-						
-						LoginService login = LoginService.getInstance();
-						login.login();
-						break;
-					case 2:
-						//¼Õ´Ô²¨ ±¸Çö
-					default :
-						System.out.println("Àß¸øµÈ °ªÀ» ÀÔ·Â ÇÏ¿´½À´Ï´Ù.");
-				}
-			}
-			
-	
-	public void managerSelect() {
-		int num=0;
-		while(true) {
-		System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
-		System.out.println("¦¢                                     ¦¢");
-		System.out.println("¦¢  1. ½ÄÀç·á °ü¸®                                                        ¦¢");
-		System.out.println("¦¢                                     ¦¢");
-		System.out.println("¦¢  2. ¿¹¾à °ü¸®                                                           ¦¢");
-		System.out.println("¦¢                                     ¦¢");
-		System.out.println("¦¢  3. Á÷¿ø °ü¸®                                                           ¦¢");
-		System.out.println("¦¢                                     ¦¢");
-		System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
-		try {
-		    num = Integer.valueOf(sc.nextLine());
-		    break;
-		} catch (NumberFormatException e) {
-		    System.out.println("Àß¸øµÈ °ªÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.");
-		    continue;
 		}
+		switch (num) {
+		case 1:
+			System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¢       °ü¸®ÀÚÀÇ ¾ÆÀÌµð¿Í ÆÐ½º¿öµå¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä        	     ¦¢");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¢       ID :                         	     ¦¢");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¢       PW :                                 ¦¢");
+			System.out.println("¦¢    	                                     ¦¢");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¢                                            ¦¢");
+			System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
 
-	 }	
-		switch(num) {
-			case 1:
+			LoginService login = LoginService.getInstance();
+			login.login();
+			break;
+		case 2:
+			// ¼Õ´Ô²¨ ±¸Çö
+		default:
+			System.out.println("Àß¸øµÈ °ªÀ» ÀÔ·Â ÇÏ¿´½À´Ï´Ù.");
+		}
+	}
+
+	public void managerSelect() {
+		int num = 0;
+		while (true) {
+			System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¢  1. ½ÄÀç·á °ü¸®                                                        ¦¢");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¢  2. ¿¹¾à °ü¸®                                                           ¦¢");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¢  3. Á÷¿ø °ü¸®                                                           ¦¢");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
+			try {
+				System.out.println("¿øÇÏ½Ã´Â °ü¸®±â´ÉÀ» ¼ýÀÚ·Î ÀÔ·ÂÇØ ÁÖ¼¼¿ä : ");
+				num = Integer.valueOf(sc.nextLine());
+				break;
+			} catch (NumberFormatException e) {
+				System.out.println("Àß¸øµÈ °ªÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.");
+				continue;
+			}
+
+		}
+		switch (num) {
+		case 1:
+			while (true) {
 				System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
 				System.out.println("¦¢                                     ¦¢");
 				System.out.println("¦¢  1. ½ÄÀç·á ±¸ÀÔ                                                        ¦¢");
@@ -102,27 +104,56 @@ public class MainController {
 				System.out.println("¦¢                                     ¦¢");
 				System.out.println("¦¢  3. ½ÄÀç·á Æó±â                                                        ¦¢");
 				System.out.println("¦¢                                     ¦¢");
-				System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
-				OderService order = OderService.getInstance();
-				order.selectOder();
-				break;
-			case 2:
-				System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
-				System.out.println("¦¢                                     ¦¢");
-				System.out.println("¦¢  1. ¿¹¾à Á¶È¸                                                           ¦¢");
+				System.out.println("¦¢  0. µ¹¾Æ°¡±â                                                            ¦¢");
 				System.out.println("¦¢                                     ¦¢");
 				System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
-				break;
-			case 3:
-				System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
-				System.out.println("¦¢                                     ¦¢");
-				System.out.println("¦¢  1. Á÷¿ø Á¶È¸                                                           ¦¢");
-				System.out.println("¦¢                                     ¦¢");
-				System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
-				break;
-			default : 	
-				System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-				break;
+				OrderService order = OrderService.getInstance();
+				order.selectOrder();
+				System.out.println();
+				try {
+					System.out.print("¿øÇÏ½Ã´Â ±â´ÉÀ» ¼ýÀÚ·Î ÀÔ·ÂÇØ ÁÖ¼¼¿ä : ");
+					int value = Integer.valueOf(sc.nextLine());
+					switch (value) {
+					case 1:
+						OrderService os = OrderService.getInstance();
+						os.ingredientOrder();
+						break;
+					case 2:
+
+					case 3:
+
+					case 0:
+						managerSelect();
+					default:
+						System.out.println("Àß¸øµÈ °ªÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.");
+						break;
+					}
+					break;
+				} catch (NumberFormatException e) {
+					System.out.println("Àß¸øµÈ °ªÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.");
+					continue;
+				}
+			}
+			break;
+		case 2:
+			System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¢  1. ¿¹¾à Á¶È¸   ±â´É ±¸Çö                                           ¦¢");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
+			break;
+		case 3:
+			System.out.println("¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¢  1. Á÷¿ø Á¶È¸  ±â´É ±¸Çö                                            ¦¢");
+			System.out.println("¦¢                                     ¦¢");
+			System.out.println("¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
+			break;
+		default:
+			System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			break;
 		}
+
 	}
+
 }
