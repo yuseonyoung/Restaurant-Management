@@ -12,20 +12,6 @@ public class OrderDTO {
 	private String v_id;
 	
 	public OrderDTO(){}
-	
-	public OrderDTO(String i_id, String i_name, String i_origin, String i_classification, String i_expirationdate,
-		int i_inventory, String i_storage, String i_allergy, String v_id) {
-		
-		this.i_id = i_id;
-		this.i_name = i_name;
-		this.i_origin = i_origin;
-		this.i_classification = i_classification;
-		this.i_expirationdate = i_expirationdate;
-		this.i_inventory = i_inventory;
-		this.i_storage = i_storage;
-		this.i_allergy = i_allergy;
-		this.v_id = v_id;
-	}
 
 
 	public String getI_id() {

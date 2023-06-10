@@ -25,8 +25,8 @@ public class LoginDAO {
 	JdbcUtil jdbc = JdbcUtil.getInstance();
 	// id와 pw까지 검사하는 메서드
 	public Map<String, Object> login(String id, String pass) {
-		String sql = "SELECT * FROM MANAGER WHERE P_LOGINID = ?";
-		sql = sql + " AND P_PW = ? ";
+		String sql = " SELECT E_ID, E_PASSWD, E_RANK FROM EMPLOYEE WHERE E_ID = ?";
+		sql = sql + " AND E_PASSWD = ? ";
 
 		List<Object> param = new ArrayList<Object>();
 		param.add(id);

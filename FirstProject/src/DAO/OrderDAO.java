@@ -21,7 +21,7 @@ public class OrderDAO {
 	
 	JdbcUtil jdbc = JdbcUtil.getInstance();
 	
-	public List<Map<String, Object>> selectList() {
+	public List<Map<String, Object>> selectList(){
 		String sql = "SELECT I_ID, I_NAME, I_INVENTORY,  I_ORIGIN "
 				 + " FROM INGREDIENT WHERE I_INVENTORY <= 20 ";
 		return (List<Map<String, Object>>) jdbc.selectList(sql);
@@ -32,5 +32,17 @@ public class OrderDAO {
 		List<Object> param = new ArrayList<Object>();
 		param.add(id);
 		return jdbc.selectOne(sql,param);
+	}
+	
+	public int upDateQty(String name, Object qty){
+		//트리거 공부해서 트리거로 한번에 처리하자
+		
+		String sql = " UPDATE INGREDIENT SET I_INVENTORY = ? WHERE I_NAME = ? ";
+		System.out.printf(name,qty);
+		List<Object> param = new ArrayList<Object>();
+		param.add(qty);
+		param.add(name);
+		
+		return jdbc.update(sql, param);
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import Controller.MainController;
 import DAO.LoginDAO;
+import DTO.EmployeeDTO;
+import JDBCUtil.TotalView;
 //import dao.LoginDAO;
 
 //외부로부터 받아들일수있는것을 입력받는 클래스
@@ -29,7 +31,7 @@ public class LoginService {
 	Map<String, Object> result;
 
 	// 로그인 메서드
-	public void login() {
+	public Map<String, Object> login() {
 		System.out.println("▶▶▶  로그인 ◀◀◀");
 
 		Loop1: while (true) {
@@ -44,12 +46,17 @@ public class LoginService {
 				String value = sc.nextLine();
 				loginCount++;
 
+				EmployeeDTO eld = new EmployeeDTO();
 				try {
 					if (value.equalsIgnoreCase("Y")) {
+												
 						result = dao.login(id, pw);
+						String rank=(String)result.get("E_RANK");
+						eld.setE_rank(rank);
+						
 					} else if (value.equalsIgnoreCase("N")) {
-						MainController mc = new MainController();
-						mc.init();
+						TotalView lv = TotalView.getInstance();
+						lv.init();
 					} else {
 						System.out.println("잘못된값을 입력하였습니다. 다시 입력해주세요.");
 						continue;
@@ -59,7 +66,7 @@ public class LoginService {
 						System.out.println("ID나 PW를 확인해주세요.");
 						
 					} else {
-						System.out.println("관리자 계정으로 접속하였습니다.");
+						System.out.printf("%3s 계정으로 접속하였습니다.", eld.getE_rank());
 						break Loop1;
 					}
 					
@@ -71,7 +78,6 @@ public class LoginService {
 							try {
 								Thread.sleep(1000);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -86,6 +92,7 @@ public class LoginService {
 				continue Loop1;
 			}
 		}
+		return result;
 	}
 
 //-----------------------------------------------------------------여기까지 로그인 메소드

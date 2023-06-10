@@ -95,7 +95,7 @@ public class JdbcUtil {
 //--------------------------------------------------------------------------한개의 값을 받아 한행을 조회하는 메소드
 	
 	public Map<String, Object> selectOne(String sql, List<Object> param) {
-		// sql = "SELECT * FROM TBL_MEMBER WHERE MEM_ID=? AND MEM_PASS=?"
+		// ex) sql = "SELECT * FROM TBL_MEMBER WHERE MEM_ID=? AND MEM_PASS=?"
 
 		Map<String, Object> row = null;
 		try {
@@ -114,6 +114,7 @@ public class JdbcUtil {
 			int columnCount = rsmd.getColumnCount();
 
 			while (rs.next()) {
+				
 				row = new HashMap<>();
 
 				for (int i = 0; i < columnCount; i++) {
@@ -122,7 +123,45 @@ public class JdbcUtil {
 					row.put(key, value);
 				}
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+				}
+			
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+				}
+			
+		}
+		return row;
+	}
+//-------------------------------------------------------------------------------------조건에 맞는 행을 조회하는 메소드
+	public int update(String sql, List<Object> param) {
+		int result = 0;
 
+		try {
+			conn = DriverManager.getConnection(url, user, passwd);
+			pstmt = conn.prepareStatement(sql);
+			
+			for (int i = 0; i < param.size(); i++) {
+				// 오라클이기 때문에 1번부터 시작해야됨 ?에 대응되는 숫자임
+				pstmt.setObject(i + 1, param.get(i));
+			}
+			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -145,10 +184,10 @@ public class JdbcUtil {
 				}
 			;
 		}
-		return row;
+		return result;
 	}
-//-------------------------------------------------------------------------------------조건에 맞는 행을 조회하는 메소드
-	public int update(String sql) {
+//-------------------------------------------------------------------------------------------------------------
+	public int update(String sql ) {
 
 		int result = 0;
 
@@ -186,7 +225,7 @@ public class JdbcUtil {
 		}
 		return result;
 	}
-
+//---------------------------------------------------------------------------------------------------
 	public List<Map<String, Object>> selectList(String sql) {
 		List<Map<String, Object>> list = null;
 

@@ -7,9 +7,12 @@ import java.util.Scanner;
 
 import DAO.OrderDAO;
 import DTO.OrderDTO;
+import JDBCUtil.ScanUtil;
 
 public class OrderService {
 	Scanner sc = new Scanner(System.in);
+	OrderDTO od = new OrderDTO();
+	
 	private static OrderService instance= null;
 	private OrderService() {}
 	
@@ -41,20 +44,23 @@ public class OrderService {
 	}
 //------------------------------------------------------재고수량이 적은 식재료 목록 보여주기	
 	public void ingredientOrder() {
-		System.out.print("구입하실 식재료명을 입력하세요 : ");
+		System.out.print("구입하실 식재료명을 입력 하세요 : ");
 		String name = sc.nextLine();
-		OrderDTO od = new OrderDTO();
 		od.setI_name(name);
 		
-		Map<String, Object> ingredient = dao.chooseOne(od.getI_name());
-		Iterator<Map.Entry<String, Object>> iterator = ingredient.entrySet().iterator();
+		System.out.print("구입하실 수량을 입력 하세요 : ");
+		int num = ScanUtil.nextInt();
+		od.setI_inventory(num);
 		
-		while (iterator.hasNext()) {
-		    Map.Entry<String, Object> entry = iterator.next();
-		    
-		    Object value = entry.getValue();
-		    System.out.printf(" %3s ",value);
-		
-		}
+		int ingredient = dao.upDateQty(od.getI_name(), od.getI_inventory());
+//		Iterator<Map.Entry<String, Object>> iterator = ingredient.entrySet().iterator();
+//		
+//		while (iterator.hasNext()) {
+//		    Map.Entry<String, Object> entry = iterator.next();
+//		    
+//		    Object value = entry.getValue();
+//		    System.out.printf(" %3s ",value);
+//		
+//		}
 	}
 }
