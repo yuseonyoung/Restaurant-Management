@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class JdbcUtil {
+	
 	/*
 	 * JDBC를 사용하여 CRUD를 효율적으로 사용할 수 있는 메서드를 포함한 class 여기는 싱글톤 패턴을 적용한다.
 	 */
@@ -27,16 +28,15 @@ public class JdbcUtil {
 		return instance;
 	}
 
-// ---------------------------------------------------------------------------여기까지 싱글톤
+// ---------------------------------------------------------------------------------------여기까지 싱글톤
 	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String user = "ysy01";
 	private String passwd = "7487";
-	private Connection conn;
-
+	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private Statement stmt = null;
 	private ResultSet rs = null;
-//-----------------------------------------------------------------------------db연결에 필요한 변수선언
+//----------------------------------------------------------------------------------------db연결에 필요한 변수선언
 	public Map<String, Object> selectOne(String sql) {
 		Map<String, Object> row = null;
 
@@ -67,7 +67,7 @@ public class JdbcUtil {
 				}
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (rs != null)
@@ -92,39 +92,39 @@ public class JdbcUtil {
 		// 1개의 값을 출력할거니 list안만듬
 		return row;
 	}
-//--------------------------------------------------------------------------한개의 값을 받아 한행을 조회하는 메소드
+//---------------------------------------------------------------------------------------한개의 값을 받아 한행을 조회하는 메소드
 	
 	public Map<String, Object> selectOne(String sql, List<Object> param) {
 		// ex) sql = "SELECT * FROM TBL_MEMBER WHERE MEM_ID=? AND MEM_PASS=?"
 
 		Map<String, Object> row = null;
+	
 		try {
+			
 			conn = DriverManager.getConnection(url, user, passwd);
 			pstmt = conn.prepareStatement(sql);
+		
 			for (int i = 0; i < param.size(); i++) {
 				// 오라클이기 때문에 1번부터 시작해야됨 ?에 대응되는 숫자임
 				pstmt.setObject(i + 1, param.get(i));
 			}
-			// sql에 존재하는 ?에 대응되는 데이터 mapping =>
-			// pstmt.set타입명(?순번,데이터)
-			// prepareStatement 쿼리는 입력데이터가 들어와야 실행됨
-			rs = pstmt.executeQuery();
-			// Set 데이터들을 Map으로 변환해서 반환해야한다 반환타입이 Map임
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
-
-			while (rs.next()) {
-				
-				row = new HashMap<>();
-
-				for (int i = 0; i < columnCount; i++) {
-					String key = rsmd.getColumnLabel(i + 1);
-					Object value = rs.getObject(i + 1);
-					row.put(key, value);
-				}
-			}
 			
-		} catch (SQLException e) {
+			rs = pstmt.executeQuery();
+			
+			 if (rs != null) {
+		            ResultSetMetaData rsmd = rs.getMetaData();
+		            int columnCount = rsmd.getColumnCount();
+
+		            while (rs.next()) {
+		            	row = new HashMap<>();
+		                for (int i = 0; i < columnCount; i++) {
+		                    String key = rsmd.getColumnLabel(i + 1);
+		                    Object value = rs.getObject(i + 1);
+		                    row.put(key, value);
+		                }
+		            }
+		        }						
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (rs != null)
@@ -148,8 +148,8 @@ public class JdbcUtil {
 		}
 		return row;
 	}
-//-------------------------------------------------------------------------------------조건에 맞는 행을 조회하는 메소드
-	public int update(String sql, List<Object> param) {
+//-------------------------------------------------------------------------------------------------조건에 맞는 행을 조회하는 메소드
+	public int insert(String sql, List<Object> param) {
 		int result = 0;
 
 		try {
@@ -162,7 +162,7 @@ public class JdbcUtil {
 			}
 			result = pstmt.executeUpdate();
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (rs != null)
@@ -201,7 +201,7 @@ public class JdbcUtil {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (rs != null)
@@ -233,7 +233,6 @@ public class JdbcUtil {
 			conn = DriverManager.getConnection(url, user, passwd);
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
 			// metadata를 통해서 resultset에있는 column의 수를 얻어옴
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int columnCount = rsmd.getColumnCount();
@@ -254,7 +253,7 @@ public class JdbcUtil {
 				list.add(row);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (rs != null)

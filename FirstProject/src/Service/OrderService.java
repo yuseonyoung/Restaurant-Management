@@ -10,8 +10,10 @@ import DTO.OrderDTO;
 import JDBCUtil.ScanUtil;
 
 public class OrderService {
+	
 	Scanner sc = new Scanner(System.in);
 	OrderDTO od = new OrderDTO();
+	
 	
 	private static OrderService instance= null;
 	private OrderService() {}
@@ -36,7 +38,7 @@ public class OrderService {
 		System.out.println("  순번     식재료코드          식재료명       재고        원산지");
 		for(Map<String, Object> n : list) {
 		System.out.printf("%3d  %-11s %3s      %5d개        %3s \n",(count++),n.get("I_ID"),n.get("I_NAME")
-				,Integer.parseInt((String.valueOf(n.get("I_INVENTORY"))).trim()),n.get("I_ORIGIN"));
+				,Integer.parseInt((String.valueOf(n.get("I_INVEN"))).trim()),n.get("I_ORIGIN"));
 		System.out.println("───────────────────────────────────────");
 		
 		
@@ -50,17 +52,39 @@ public class OrderService {
 		
 		System.out.print("구입하실 수량을 입력 하세요 : ");
 		int num = ScanUtil.nextInt();
-		od.setI_inventory(num);
+		od.setI_inven(num);
 		
-		int ingredient = dao.upDateQty(od.getI_name(), od.getI_inventory());
-//		Iterator<Map.Entry<String, Object>> iterator = ingredient.entrySet().iterator();
-//		
-//		while (iterator.hasNext()) {
-//		    Map.Entry<String, Object> entry = iterator.next();
-//		    
-//		    Object value = entry.getValue();
-//		    System.out.printf(" %3s ",value);
-//		
-//		}
+		dao.orderInsert(od.getI_name(), od.getI_inven());
+		
+	}
+	
+	public void OrderList(){
+		int count =1;
+		List<Map<String, Object>> list = dao.orderAllList();
+		
+		System.out.println("─────────────────────────────────────────────────────────");
+		System.out.println("                                           식재료 목록 ");
+		System.out.println();
+		System.out.println("  순번     식재료코드          식재료명       재고        원산지        유통기한        보관");
+		for(Map<String, Object> n : list) {
+		System.out.printf("%3d  %-11s %3s      %5d개        %3s      %3s      %3s        \n",(count++),n.get("I_ID"),n.get("I_NAME")
+				,Integer.parseInt((String.valueOf(n.get("I_INVEN"))).trim()),n.get("I_ORIGIN")
+				,n.get("P_EXPDATE"),n.get("I_STOR"));
+		System.out.println("──────────────────────────────────────────────────────────");
+		
+		
+		}
+	}
+	public void OrderDelete() {
+		int count =1;
+		System.out.println("─────────────────────────────────────────────────────────");
+		System.out.println("유통기한이 지난 식재료 목록");
+		System.out.println("  순번     식재료코드          식재료명     구매일자       유통기한     재고");
+		List<Map<String, Object>> list = dao.deleteList();
+		for(Map<String, Object> n : list) {
+			System.out.printf("%3d  %3s       %-11s %3s      %5s    %3s   %3s \n",(count++),n.get("P_ID"),n.get("I_ID")
+					,n.get("I_NAME"),n.get("P_BDATE"),n.get("P_EXPDATE"),n.get("P_QTY"));
+		}
+		
 	}
 }

@@ -1,11 +1,12 @@
 package Service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import Controller.MainController;
 import DAO.LoginDAO;
 import DTO.EmployeeDTO;
+import DTO.IngredientDTO;
 import JDBCUtil.TotalView;
 //import dao.LoginDAO;
 
@@ -15,7 +16,7 @@ public class LoginService {
 	// 싱글톤
 	private static LoginService instance;
 
-	private LoginService() {
+	public LoginService() {
 	}
 
 	public static LoginService getInstance() {
@@ -24,23 +25,37 @@ public class LoginService {
 		}
 		return instance;
 	}
-//----------------------------------------------------여기까지 싱글톤 구현
+//----------------------------------------------------------------여기까지 싱글톤 구현
+	IngredientDTO idd = new IngredientDTO();
+	private Map<String, String> sessionStorage = new HashMap<>();
+	
+	public Map<String, String> getSessionStorage() {
+		return sessionStorage;
+	}
 
+	public void setSessionStorage(Map<String, String> sessionStorage) {
+		this.sessionStorage = sessionStorage;
+	}
+	
 	public static int loginCount = 0;
 	LoginDAO dao = LoginDAO.getInstance();
 	Map<String, Object> result;
 
 	// 로그인 메서드
-	public Map<String, Object> login() {
+	public Map<String, Object> login()   {
 		System.out.println("▶▶▶  로그인 ◀◀◀");
 
 		Loop1: while (true) {
 
 			System.out.print("ID 입력 : ");
-			String id = sc.nextLine();
-
+			
+			idd.setI_id(sc.nextLine());
 			System.out.print("PW 입력 : ");
-			String pw = sc.nextLine();
+			idd.setI_pw(sc.nextLine());
+			
+			sessionStorage.put(idd.getI_id(), idd.getI_pw());
+			
+			
 			while (true) {
 				System.out.println("로그인 하시려면 Y, 돌아가시려면 N을 눌러주세요");
 				String value = sc.nextLine();
@@ -50,13 +65,19 @@ public class LoginService {
 				try {
 					if (value.equalsIgnoreCase("Y")) {
 												
-						result = dao.login(id, pw);
-						String rank=(String)result.get("E_RANK");
-						eld.setE_rank(rank);
+						result = dao.login(idd.getI_id(), idd.getI_pw());
+						
+						String job=(String)result.get("E_JOB");
+						eld.setE_rank(job);
 						
 					} else if (value.equalsIgnoreCase("N")) {
 						TotalView lv = TotalView.getInstance();
-						lv.init();
+						try {
+							lv.init();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					} else {
 						System.out.println("잘못된값을 입력하였습니다. 다시 입력해주세요.");
 						continue;
@@ -66,7 +87,7 @@ public class LoginService {
 						System.out.println("ID나 PW를 확인해주세요.");
 						
 					} else {
-						System.out.printf("%3s 계정으로 접속하였습니다.", eld.getE_rank());
+						System.out.printf("%s 계정으로 접속하였습니다. \n", eld.getE_rank());
 						break Loop1;
 					}
 					
@@ -96,7 +117,7 @@ public class LoginService {
 	}
 
 //-----------------------------------------------------------------여기까지 로그인 메소드
-	public Map<String, Object> isDuplicate(String id) {
+	public Map<String, Object> isDuplicate(String id)   {
 		result = dao.select(id);
 		return result;
 	}
