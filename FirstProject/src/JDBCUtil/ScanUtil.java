@@ -14,7 +14,7 @@ public class ScanUtil {
 				int result = Integer.valueOf(sc.nextLine());
 				return result;
 			}catch (NumberFormatException e) {
-				System.out.println("잘못 입력!!");
+				System.out.println("잘못된 입력값입니다.");
 			}
 		}
 	}
